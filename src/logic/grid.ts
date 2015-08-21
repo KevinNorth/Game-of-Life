@@ -44,7 +44,7 @@ module Grid {
             // Don't add the cell itself into the array of its neighbors
             continue;
           }
-          if(this.cells[i][j]) {
+          if(this.cells[i] && this.cells[i][j]) {
             neighbors.push(this.cells[i][j]);
           }
         }
