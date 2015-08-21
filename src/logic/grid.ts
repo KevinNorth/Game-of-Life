@@ -28,29 +28,45 @@ module Grid {
     }
 
     public performIteration(): void {
+      var newStatuses: boolean[][] = [];
+
+      // We have to determine the cells' new statuses before actually changing
+      // any of their statueses, so they all change at once, which is why we
+      // have two sets of loops.
+      for (var i: number = 0; i < this.cells.length; i++) {
+        newStatuses[i] = [];
+        for (var j: number = 0; j < this.cells[i].length; j++) {
+          newStatuses[i][j] = this.updateIndividualCell(i, j);
+        }
+      }
+
       for (var i: number = 0; i < this.cells.length; i++) {
         for (var j: number = 0; j < this.cells[i].length; j++) {
-          this.updateIndividualCell(i, j);
+          this.cells[i][j].alive = newStatuses[i][j];
         }
       }
     }
 
-    private updateIndividualCell(row: number, column: number): void {
+    private updateIndividualCell(row: number, column: number): boolean {
       var neighbors: Cell.Cell[] = [];
 
       for (var i: number = row - 1; i <= row + 1; i++) {
         for (var j: number = column - 1; j <= column + 1; j++) {
-          if(i == 0 && j == 0) {
+          if((i == row) && (j == column)) {
             // Don't add the cell itself into the array of its neighbors
             continue;
           }
-          if(this.cells[i] && this.cells[i][j]) {
+          if(i >= 0 && j >= 0
+            && i < this.cells.length
+            && j < this.cells[i].length) {
             neighbors.push(this.cells[i][j]);
           }
         }
       }
 
-      this.cells[row][column].updateStatus(neighbors);
+      var cell: Cell.Cell = this.cells[row][column];
+
+      return cell.determineNewStatus(neighbors);
     }
   }
 }

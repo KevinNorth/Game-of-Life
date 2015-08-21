@@ -15,7 +15,7 @@ module Cell {
         neighborsForBirth : Cell.DEFAULT_NEIGHBORS_FOR_BIRTH;
     }
 
-    updateStatus(neighbors: Cell[]):void {
+    determineNewStatus(neighbors: Cell[]):boolean {
       var numAlive: number = 0;
 
       for (var i: number = 0; i < neighbors.length; i++) {
@@ -24,14 +24,10 @@ module Cell {
         }
       }
 
-      if(this.alive) {
-        if(!(numAlive in this.neighborsForSurvival)) {
-          this.alive = false;
-        }
+      if (this.alive) {
+        return this.neighborsForSurvival.indexOf(numAlive) != -1;
       } else {
-        if(numAlive in this.neighborsForBirth) {
-          this.alive = true;
-        }
+        return this.neighborsForBirth.indexOf(numAlive) != -1;
       }
     }
   }
