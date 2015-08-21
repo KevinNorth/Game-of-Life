@@ -3,9 +3,10 @@
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "out": "../../build/game_of_life.js",
+        "out": "../build/game_of_life.js"
     },
     "files": [
-
+        "main.ts",
+        "view/view.ts"
     ]
 }
