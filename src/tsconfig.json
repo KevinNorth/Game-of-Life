@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
         "noImplicitAny": true,
-        "removeComments": true,
+        "removeComments": false,
         "preserveConstEnums": true,
         "out": "../build/game_of_life.js"
     },
     "files": [
         "main.ts",
-        "view/view.ts"
+        "view/view.ts",
+        "logic/cell.ts",
+        "logic/grid.ts"
     ]
 }
